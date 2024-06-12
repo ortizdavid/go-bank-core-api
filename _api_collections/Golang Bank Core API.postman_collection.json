@@ -1,0 +1,424 @@
+{
+	"info": {
+		"_postman_id": "8483f83f-475f-4f75-8561-2165b15c8d67",
+		"name": "Golang Bank Core API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13144775"
+	},
+	"item": [
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Create Account with Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer_name\": \"jAnna Maria\",\r\n    \"identification_number\": \"05455T5F644\",\r\n    \"email\": \"a@gmail.com\",\r\n    \"phone\": \"+294678902348\",\r\n    \"address\": \"Luanda, Angola\",\r\n    \"account_type\": 1,\r\n    \"currency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/accounts/create-with-customer",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"accounts",
+								"create-with-customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create and Associate an Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer_id\": 5,\r\n    \"account_type\": 1,\r\n    \"currency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/accounts",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Accounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/accounts",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/accounts/2",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"accounts",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account By UniqueId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/accounts/by-uuid/e8893d17-38f9-442e-a752-2a7ebc2d39a5",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"accounts",
+								"by-uuid",
+								"e8893d17-38f9-442e-a752-2a7ebc2d39a5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Account Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"accountStatus\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/accounts/change-status",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"accounts",
+								"change-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Account Type",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"accountType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/accounts/change-type",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"accounts",
+								"change-type"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Deposit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account_number\": \"8792529764\",\r\n    \"amount\": 233777.98,\r\n    \"currency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/transactions/deposit",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"transactions",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account_number\": \"8792529764\",\r\n    \"amount\": 1230.98,\r\n    \"currency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/transactions/withdraw",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"transactions",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer by Account Number",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"source_number\": \"7840163431\",\r\n    \"destination_number\": \"8792529764\",\r\n    \"amount\": 529.98,\r\n    \"currency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/transactions/transfer-number",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"transactions",
+								"transfer-number"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer by IBAN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"source_iban\": \"XX741234565111434546\",\r\n    \"destination_iban\": \"XX481234569540236342\",\r\n    \"amount\": 12300.98,\r\n    \"currency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/transactions/transfer-iban",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"transactions",
+								"transfer-iban"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/transactions",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transactions By Account UniqueId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/transactions/by-account-uuid/98f5f74d-d4a7-4f72-b5e3-32bae59870e9",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"transactions",
+								"by-account-uuid",
+								"98f5f74d-d4a7-4f72-b5e3-32bae59870e9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transactions By Account Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/transactions/by-account-id/1",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"transactions",
+								"by-account-id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/customers",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/customers",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/customers/1",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By UniqueId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/customers/by-uuid/89f64391-d7c5-403d-b341-aa9b46495af1",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"customers",
+								"by-uuid",
+								"89f64391-d7c5-403d-b341-aa9b46495af1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": []
+		}
+	]
+}
