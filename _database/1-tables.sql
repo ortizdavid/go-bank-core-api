@@ -1,7 +1,7 @@
 \c postgres;
-DROP DATABASE IF EXISTS bank_core_api;
-CREATE DATABASE bank_core_api;
-\c bank_core_api;
+DROP DATABASE IF EXISTS go_bank_core_api;
+CREATE DATABASE go_bank_core_api;
+\c go_bank_core_api;
 
 
 DROP TABLE IF EXISTS account_status;
@@ -54,8 +54,8 @@ DROP TABLE IF EXISTS accounts;
 CREATE TABLE accounts (
     account_id SERIAL PRIMARY KEY,
     customer_id BIGINT NOT NULL,
-    account_type_id INT NOT NULL,
-    account_status_id INT NOT NULL,
+    account_type INT NOT NULL,
+    account_status INT NOT NULL,
     account_number VARCHAR(18) UNIQUE NOT NULL,
     iban VARCHAR(31) UNIQUE NOT NULL,
     holder_name VARCHAR(150),
@@ -64,8 +64,8 @@ CREATE TABLE accounts (
     unique_id UUID DEFAULT gen_random_uuid(),
 	created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
 	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_account_type FOREIGN KEY(account_type_id) REFERENCES account_type(type_id),
-    CONSTRAINT fk_account_status FOREIGN KEY(account_status_id) REFERENCES account_status(status_id),
+    CONSTRAINT fk_account_type FOREIGN KEY(account_type) REFERENCES account_type(type_id),
+    CONSTRAINT fk_account_status FOREIGN KEY(account_status) REFERENCES account_status(status_id),
     CONSTRAINT fk_customer_account FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
 );
 

@@ -3,7 +3,6 @@ package config
 import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"github.com/gofiber/fiber/v2"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"github.com/ortizdavid/go-nopain/conversion"
 )

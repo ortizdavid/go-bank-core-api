@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 	"github.com/ortizdavid/go-bank-core-api/config"
-	"github.com/ortizdavid/go-bank-core-api/controllers"
+	"github.com/ortizdavid/go-bank-core-api/pkg/controllers"
 )
 
 func main() {

@@ -7,7 +7,20 @@ SELECT * FROM customers;
 -- view_account_data
 DROP VIEW IF EXISTS view_account_data;
 CREATE VIEW view_account_data AS 
-SELECT * FROM accounts;
+SELECT 
+    acc.account_id, acc.unique_id,
+    acc.account_number, acc.iban,
+    acc.balance, acc.currency,
+    acc.created_at, acc.updated_at,
+    cu.customer_id, cu.customer_name, 
+    cu.identification_number,
+    act.type_id, act.type_name,
+    acs.status_id, acs.status_name
+FROM accounts acc
+JOIN customers cu ON (cu.customer_id = acc.customer_id)
+JOIN account_status acs ON (acs.status_id = acc.account_status_id)
+JOIN account_type act ON (act.type_id = acc.account_type_id)
+ORDER BY acc.created_at DESC;
 
 
 -- view_transaction_data
