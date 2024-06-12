@@ -7,6 +7,45 @@
 	},
 	"item": [
 		{
+			"name": "Static Routes",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Collections",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GO_BANK_CORE}}/download-collections",
+							"host": [
+								"{{GO_BANK_CORE}}"
+							],
+							"path": [
+								"download-collections"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Accounts",
 			"item": [
 				{
