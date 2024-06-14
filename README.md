@@ -97,3 +97,53 @@ REST API with Banking System written in golang
         "currency": "USD"
     }
     ```
+
+- Create Account with Customer
+    ```http
+    POST /api/accounts/create-with-customer
+    ```
+    ```json
+    {
+        "customer_name": "Anna Maria",
+        "identification_number": "05455T5F644",
+        "email": "ana@gmail.com",
+        "phone": "+294678902348",
+        "address": "Luanda, Angola",
+        "account_type_id": 1,
+        "currency": "USD"
+    }
+    ```
+
+- Create Account And Associate Customer
+    ```http
+    POST /api/accounts
+    ```
+    ```json
+    {
+        "customer_id": 5,
+        "account_type": 1,
+        "currency": "USD"
+    }
+    ```
+
+- Change Account Status
+    ```http
+    PUT /api/accounts/change-status
+    ```
+    ```json
+    {
+        "account_number": "8792529764",
+        "account_status": 6
+    }
+    ```
+
+- Change Account Type
+    ```http
+    PUT /api/accounts/change-type
+    ```
+    ```json
+    {
+        "account_number": "8792529764",
+        "account_type": 1
+    }
+    ```
