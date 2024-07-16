@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 	"gorm.io/gorm"
-	reportRepo "github.com/ortizdavid/go-bank-core-api/pkg/repositories/reports"
+	reportRepo "github.com/ortizdavid/go-bank-core-api/core/repositories/reports"
 )
 
 type AccountReportController struct {

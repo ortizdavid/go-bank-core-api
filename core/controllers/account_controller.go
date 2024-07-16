@@ -2,10 +2,9 @@ package controllers
 
 import (
 	"net/http"
-
 	"github.com/ortizdavid/go-bank-core-api/config"
-	accountRepo "github.com/ortizdavid/go-bank-core-api/pkg/repositories/accounts"
-	customerRepo "github.com/ortizdavid/go-bank-core-api/pkg/repositories/customers"
+	accountRepo "github.com/ortizdavid/go-bank-core-api/core/repositories/accounts"
+	customerRepo "github.com/ortizdavid/go-bank-core-api/core/repositories/customers"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

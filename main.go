@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"github.com/ortizdavid/go-bank-core-api/config"
-	"github.com/ortizdavid/go-bank-core-api/pkg/controllers"
+	"github.com/ortizdavid/go-bank-core-api/core/controllers"
 )
 
 func main() {

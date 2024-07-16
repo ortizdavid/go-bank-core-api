@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	entities "github.com/ortizdavid/go-bank-core-api/pkg/entities/customers"
+	entities "github.com/ortizdavid/go-bank-core-api/core/entities/customers"
 	"gorm.io/gorm"
 )
 
