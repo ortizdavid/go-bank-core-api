@@ -1,3 +1,19 @@
+-- Customer Status
+INSERT INTO customer_status (status_name, description) VALUES 
+('Active', 'Customer is currently active and in good standing'),
+('Inactive', 'Customer is not currently active'),
+('Suspended', 'Customer account is temporarily suspended'),
+('Closed', 'Customer account is permanently closed'),
+('Pending', 'Customer application is pending approval');
+
+-- Customer Type
+INSERT INTO customer_type (type_name, description) VALUES 
+('Individual', 'An individual customer'),
+('Business', 'A business customer'),
+('VIP', 'A very important customer with special privileges'),
+('Non-Profit', 'A non-profit organization customer'),
+('Government', 'A government entity customer');
+
 
 -- Account Status
 INSERT INTO account_status (status_name, description) VALUES

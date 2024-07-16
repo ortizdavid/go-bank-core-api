@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"net/http"
-
 	"github.com/ortizdavid/go-bank-core-api/config"
 	accountRepo "github.com/ortizdavid/go-bank-core-api/pkg/repositories/accounts"
 	transactionRepo "github.com/ortizdavid/go-bank-core-api/pkg/repositories/transactions"
@@ -24,6 +23,6 @@ func NewTransactionController(db *gorm.DB) *TransactionController {
 	}
 }
 
-func (*TransactionController) Routes(router *http.ServeMux, db *gorm.DB) {
+func (*TransactionController) RegisterRoutes(router *http.ServeMux, db *gorm.DB) {
 	
 }

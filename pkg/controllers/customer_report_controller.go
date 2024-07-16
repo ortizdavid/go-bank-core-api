@@ -16,6 +16,6 @@ func NewCustomerReportController(db *gorm.DB) *CustomerReportController {
 	}
 }
 
-func (*CustomerReportController) Routes(router *http.ServeMux, db *gorm.DB) {
+func (*CustomerReportController) RegisterRoutes(router *http.ServeMux, db *gorm.DB) {
 
 }

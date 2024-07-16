@@ -5,13 +5,16 @@ import (
 	"net/http"
 )
 
-func RegisterStaticRoutes(router *http.ServeMux) {
-	router.HandleFunc("GET /", index)
-	router.HandleFunc("GET /api", index)
-	router.HandleFunc("GET /api/download-collections", downloadCollections)
+type ApiRootController struct {
 }
 
-func index(w http.ResponseWriter, r *http.Request) {
+func (root ApiRootController) RegisterRoutes(router *http.ServeMux) {
+	router.HandleFunc("GET /", root.index)
+	router.HandleFunc("GET /api", root.index)
+	router.HandleFunc("GET /api/download-collections", root.downloadCollections)
+}
+
+func (root ApiRootController) index(w http.ResponseWriter, r *http.Request) {
 	html := `
 		<!DOCTYPE html>
 		<html lang="en">
@@ -30,7 +33,7 @@ func index(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, html)
 }
 
-func downloadCollections(w http.ResponseWriter, r *http.Request)  {
+func (root ApiRootController) downloadCollections(w http.ResponseWriter, r *http.Request)  {
 	fileName := "postman.postman_collection.json"
 	w.Header().Set("Content-Disposition", "attachment; filename="+fileName)
 	w.Header().Set("Content-Type", "application/json")

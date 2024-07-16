@@ -4,7 +4,8 @@ import "time"
 
 type Transaction struct {
 	TransactionId     int64`gorm:"primaryKey;autoIncrement"`
-	AccountId         int64`gorm:"column:account_id"`
+	SourceId          int64`gorm:"column:source_id"`
+	DestinationId     int64`gorm:"column:destination_id"`
 	TransactionStatus TransactionStatus`gorm:"column:transaction_status_id"`
 	TransactionType   TransactionType`gorm:"column:transaction_type_id"`
 	Code              string`gorm:"column:code"`

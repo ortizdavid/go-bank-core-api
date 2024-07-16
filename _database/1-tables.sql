@@ -3,6 +3,24 @@ DROP DATABASE IF EXISTS go_bank_core_api;
 CREATE DATABASE go_bank_core_api;
 \c go_bank_core_api;
 
+CREATE TYPE TYPE_GENDER AS ENUM('Male', 'Female');
+
+
+DROP TABLE IF EXISTS customer_status;
+CREATE TABLE customer_status (
+    status_id SERIAL PRIMARY KEY,
+    status_name VARCHAR(20) UNIQUE NOT NULL,
+    description VARCHAR(150)
+);
+
+
+DROP TABLE IF EXISTS customer_type;
+CREATE TABLE customer_type (
+    type_id SERIAL PRIMARY KEY,
+    type_name VARCHAR(20) UNIQUE NOT NULL,
+    description VARCHAR(150)
+);
+
 
 DROP TABLE IF EXISTS account_status;
 CREATE TABLE account_status (
@@ -39,14 +57,20 @@ CREATE TABLE transaction_type (
 DROP TABLE IF EXISTS customers;
 CREATE TABLE customers (
     customer_id SERIAL PRIMARY KEY,
+    customer_type INT NOT NULL,
+    customer_status INT NOT NULL,
     customer_name VARCHAR(150) NOT NULL,
+    gender TYPE_GENDER,
+    birth_date DATE,
     identification_number VARCHAR(30) UNIQUE NOT NULL,
     email VARCHAR(150) UNIQUE,
     phone VARCHAR(20) UNIQUE,
     address VARCHAR(200),
     unique_id UUID DEFAULT gen_random_uuid(),
 	created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
-	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_customer_type FOREIGN KEY(customer_type) REFERENCES account_type(type_id),
+    CONSTRAINT fk_customer_status FOREIGN KEY(customer_status) REFERENCES account_status(status_id)
 );
 
 
@@ -73,7 +97,8 @@ CREATE TABLE accounts (
 DROP TABLE IF EXISTS transactions;
 CREATE TABLE IF NOT EXISTS transactions (
     transaction_id SERIAL PRIMARY KEY,
-    account_id INT NOT NULL,
+    source_id INT NOT NULL,
+    destination_id INT NOT NULL,
     transaction_type_id INT NOT NULL,
     transaction_status_id INT NOT NULL,
     code VARCHAR(30) UNIQUE NOT NULL,
@@ -86,6 +111,8 @@ CREATE TABLE IF NOT EXISTS transactions (
     unique_id UUID NOT NULL DEFAULT gen_random_uuid(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_source_account FOREIGN KEY(source_id) REFERENCES accounts(account_id),
+    CONSTRAINT fk_destination_account FOREIGN KEY(destination_id) REFERENCES accounts(account_id),
     CONSTRAINT fk_transaction_type FOREIGN KEY(transaction_type_id) REFERENCES transaction_type(type_id),
     CONSTRAINT fk_transaction_status FOREIGN KEY(transaction_status_id) REFERENCES transaction_status(status_id)
 );

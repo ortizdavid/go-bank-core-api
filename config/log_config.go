@@ -1,10 +1,10 @@
 package config
 
 import (
+	"github.com/ortizdavid/go-nopain/conversion"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"github.com/ortizdavid/go-nopain/conversion"
 )
 
 

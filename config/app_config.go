@@ -1,8 +1,6 @@
 package config
 
-import (
-	"github.com/ortizdavid/go-nopain/conversion"
-)
+import "github.com/ortizdavid/go-nopain/conversion"
 
 
 func ListenAddr() string {

@@ -11,17 +11,9 @@ import (
 func main() {
 	mux := http.NewServeMux()
 
-	// establish database connections
-	db, err := config.ConnectDB()
-	if err != nil {
-		log.Fatalf("failed to connect database: %v", err)
-	}
-	defer config.DisconnectDB(db)
+	dbConn, _ := config.NewDBConnectionFromEnv("DATABASE_URL")
 	
-	// setup routes
-	controllers.RegisterStaticRoutes(mux)
-	controllers.RegisterRoutes(mux, db)
-
+	controllers.RegisterRoutes(mux, dbConn.DB)
 	// start server
 	listenAddr := config.ListenAddr()
 	fmt.Printf("Listen to: http://%s\n", listenAddr)
