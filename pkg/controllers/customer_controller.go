@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"github.com/ortizdavid/go-bank-core-api/config"
 	customerRepo "github.com/ortizdavid/go-bank-core-api/pkg/repositories/customers"
-	"github.com/ortizdavid/go-nopain/conversion"
 	"github.com/ortizdavid/go-nopain/httputils"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -41,12 +40,7 @@ func (c * CustomerController) updateCustomer(w http.ResponseWriter, r *http.Requ
 
 
 func (c * CustomerController) getAllCustomers(w http.ResponseWriter, r *http.Request) {
-	currentStr := r.URL.Query().Get("current_page")
-	limitStr := r.URL.Query().Get("limit")
-	if currentStr == "" { currentStr = "0" }
-	if limitStr == "" { currentStr = "5" }
-	currentPage := conversion.StringToInt(currentStr)
-	limit := conversion.StringToInt(limitStr)
+	currentPage, limit := GetCurrentPageAndLimit(r)
 	count := int(c.customerRepository.Count())
 
 	if count == 0 {
