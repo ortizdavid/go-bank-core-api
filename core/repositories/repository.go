@@ -1,12 +1,14 @@
 package repositories
 
+import "context"
+
 type IRepository[T any] interface {
-	Create(entity T) error
-	CreateBatch(entities []T) error
-	Update(entity T) error
-	Delete(entity T) error
-	GetAll() ([]T, error)
-	GetById(id int) (T, error)
-	GetByUniqueId(uniqueId string) (T, error)
-	ExistsRecord(field string, value string) (bool, error)
+	Create(ctx context.Context, entity T) error
+	CreateBatch(ctx context.Context, entities []T) error
+	Update(ctx context.Context, entity T) error
+	Delete(ctx context.Context, entity T) error
+	GetAll(ctx context.Context, limit int, offset int) ([]T, error)
+	GetById(ctx context.Context, id int) (T, error)
+	GetByUniqueId(ctx context.Context, uniqueId string) (T, error)
+	ExistsRecord(ctx context.Context, field string, value string) (bool, error)
 }

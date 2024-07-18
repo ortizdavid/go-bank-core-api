@@ -1,6 +1,9 @@
 package repositories
 
 import (
+	"context"
+	"errors"
+
 	entities "github.com/ortizdavid/go-bank-core-api/core/entities/customers"
 	"gorm.io/gorm"
 )
@@ -15,73 +18,78 @@ func NewCustomerRepository(db *gorm.DB) *CustomerRepository {
 	}
 }
 
-func (repo *CustomerRepository) Create(customer entities.Customer) error {
-	result := repo.db.Create(&customer)
-	if result.Error != nil {
-		return result.Error
-	}
-	return nil
+func (repo *CustomerRepository) Create(ctx context.Context, customer entities.Customer) error {
+	result := repo.db.WithContext(ctx).Create(&customer)
+	return result.Error
 }
 
-func (repo *CustomerRepository) CreateBatch(customers []entities.Customer) error {
+func (repo *CustomerRepository) CreateBatch(ctx context.Context, customers []entities.Customer) error {
 	tx := repo.db.Begin()
-	result := repo.db.Create(&customers)
+	result := repo.db.WithContext(ctx).Create(&customers)
 	if result.Error != nil {
 		tx.Rollback()
 		return result.Error
 	}
-	tx.Commit()
-	return nil
+	return tx.Commit().Error
 }
 
-func (repo *CustomerRepository) Update(customer entities.Customer) error {
-	result := repo.db.Save(&customer)
-	if result.Error != nil {
-		return result.Error
-	}
-	return nil
+func (repo *CustomerRepository) Update(ctx context.Context, customer entities.Customer) error {
+	result := repo.db.WithContext(ctx).Save(&customer)
+	return result.Error
 }
 
-func (repo *CustomerRepository) Delete(customer entities.Customer) error {
-	result := repo.db.Delete(&customer)
-	if result.Error != nil {
-		return result.Error
-	}
-	return nil
+func (repo *CustomerRepository) Delete(ctx context.Context, customer entities.Customer) error {
+	result := repo.db.WithContext(ctx).Delete(&customer)
+	return result.Error
 }
 
-func (repo *CustomerRepository) GetAll(limit int, offest int) ([]entities.Customer, error) {
+func (repo *CustomerRepository) GetAll(ctx context.Context, limit int, offest int) ([]entities.Customer, error) {
 	var customers []entities.Customer
-	result := repo.db.Find(&customers).Limit(limit).Offset(offest)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-	return customers, nil
+	result := repo.db.WithContext(ctx).Find(&customers).Limit(limit).Offset(offest)
+	return customers, result.Error
 }
 
-func (repo *CustomerRepository) GetById(userId int64) (entities.Customer, error) {
+func (repo *CustomerRepository) GetById(ctx context.Context, customerId int64) (entities.Customer, error) {
 	var customer entities.Customer
-	result := repo.db.First(&customer, userId)
+	result := repo.db.WithContext(ctx).First(&customer, customerId)
 	if result.Error != nil {
 		return entities.Customer{}, result.Error
 	}
-	return customer, nil
+	return customer, result.Error
 }
 
-func (repo *CustomerRepository) GetByUniqueId(uniqueId string) (entities.Customer, error) {
+func (repo *CustomerRepository) GetByUniqueId(ctx context.Context, uniqueId string) (entities.Customer, error) {
 	var customer entities.Customer
-	result := repo.db.First(&customer, "unique_id", uniqueId)
+	result := repo.db.WithContext(ctx).First(&customer, "unique_id", uniqueId)
 	if result.Error != nil {
 		return entities.Customer{}, result.Error
 	}
-	return customer, nil
+	return customer, result.Error
 }
 
-func (repo *CustomerRepository) Count() int64 {
+func (repo *CustomerRepository) Count(ctx context.Context) (int64, error) {
 	var count int64
-	result := repo.db.Count(&count)
-	if result.Error != nil {
-		return 0
-	}
-	return count
+	result := repo.db.WithContext(ctx).Count(&count)
+	return count, result.Error
 }
+
+func (repo *CustomerRepository) ExistsRecord(ctx context.Context, field string, value string) (bool, error) {
+    var count int64
+    // Validate the field to avoid SQL injection
+    validFields := map[string]bool{
+        "identification_number":  true,
+        "email":                  true,
+        "phone":                  true,
+    }
+    if !validFields[field] {
+        return false, errors.New("invalid field name")
+    }
+    // Construct and execute the query
+    query := repo.db.WithContext(ctx).Table("customers").Where(field+" = ?", value).Count(&count)
+    if query.Error != nil {
+        return false, query.Error
+    }
+    return count > 0, nil
+}
+
+

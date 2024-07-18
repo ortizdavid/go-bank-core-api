@@ -23,6 +23,6 @@ func NewAccountController(db *gorm.DB) *AccountController {
 	}
 }
 
-func (controller *AccountController) RegisterRoutes(router *http.ServeMux, db *gorm.DB)  {
+func (controller *AccountController) RegisterRoutes(router *http.ServeMux) {
 	
 }

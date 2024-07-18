@@ -23,6 +23,6 @@ func NewTransactionController(db *gorm.DB) *TransactionController {
 	}
 }
 
-func (*TransactionController) RegisterRoutes(router *http.ServeMux, db *gorm.DB) {
+func (*TransactionController) RegisterRoutes(router *http.ServeMux) {
 	
 }
