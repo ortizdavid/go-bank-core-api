@@ -91,7 +91,7 @@ func (c * CustomerController) changeCustomerType(w http.ResponseWriter, r *http.
 		c.errorLogger.Error(err.Error())
 		return
 	}
-	msg := fmt.Sprintf("Customer '%d' Type Changed", request.CustomerId)
+	msg := fmt.Sprintf("Customer '%d' type changed", request.CustomerId)
 	c.infoLogger.Info(msg)
 	httputils.WriteJson(w, http.StatusCreated, msg)
 }
@@ -104,7 +104,7 @@ func (c * CustomerController) changeCustomerStatus(w http.ResponseWriter, r *htt
 		c.errorLogger.Error(err.Error())
 		return
 	}
-	msg := fmt.Sprintf("Customer '%d' Status Changed", request.CustomerId)
+	msg := fmt.Sprintf("Customer '%d' status changed", request.CustomerId)
 	c.infoLogger.Info(msg)
 	httputils.WriteJson(w, http.StatusCreated, msg)
 }
