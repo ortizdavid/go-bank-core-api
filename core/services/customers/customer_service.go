@@ -9,6 +9,7 @@ import (
 	"github.com/ortizdavid/go-bank-core-api/apperrors"
 	"github.com/ortizdavid/go-bank-core-api/core/entities/customers"
 	"github.com/ortizdavid/go-bank-core-api/core/repositories/customers"
+	"github.com/ortizdavid/go-bank-core-api/helpers"
 	"github.com/ortizdavid/go-nopain/datetime"
 	"github.com/ortizdavid/go-nopain/encryption"
 	"github.com/ortizdavid/go-nopain/httputils"
@@ -25,6 +26,7 @@ func NewCustomerService(db *gorm.DB) *CustomerService {
 		repository: *repositories.NewCustomerRepository(db),
 	}
 }
+
 
 func (s *CustomerService) CreateCustomer(r *http.Request, ctx context.Context, request entities.CreateCustomerRequest) error {
 	if err := serialization.DecodeJson(r.Body, &request); err != nil {
@@ -59,43 +61,108 @@ func (s *CustomerService) CreateCustomer(r *http.Request, ctx context.Context, r
 	return s.repository.Create(ctx, customer)
 }
 
-func (s *CustomerService) GetAllCustomers(r *http.Request, ctx context.Context, currentPage int, limit int) (*httputils.Pagination[entities.Customer], error) {
-	if currentPage < 0  || limit < 1 {
+
+func (s *CustomerService) UpdateCustomerContacts(r *http.Request, ctx context.Context, request entities.UpdateCustomerContactRequest) error {
+	if err := serialization.DecodeJson(r.Body, &request); err != nil {
+		return apperrors.NewBadRequestError(err.Error())
+	}
+	if err := request.Validate(); err != nil {
+		return apperrors.NewBadRequestError(err.Error())
+	}
+	customer, err := s.repository.GetById(ctx, request.CustomerId)
+	if err != nil {
+		return apperrors.NewNotFoundError("Customer not found")
+	}
+	customer.Email = request.Email
+	customer.Phone = request.Phone
+	s.repository.Update(ctx, customer)
+	return nil
+}
+
+
+func (s *CustomerService) ChangeCustomerType(r *http.Request, ctx context.Context, request entities.ChangeCustomerTypeRequest) error {
+	if err := serialization.DecodeJson(r.Body, &request); err != nil {
+		return apperrors.NewBadRequestError(err.Error())
+	}
+	if err := request.Validate(); err != nil {
+		return apperrors.NewBadRequestError(err.Error())
+	}
+	customer, err := s.repository.GetById(ctx, request.CustomerId)
+	if err != nil {
+		return apperrors.NewNotFoundError("Customer not found")
+	}
+	customer.CustomerType = request.NewType
+	s.repository.Update(ctx, customer)
+	return nil
+}
+
+
+func (s *CustomerService) ChangeCustomerStatus(r *http.Request, ctx context.Context, request entities.ChangeCustomerStatusRequest) error {
+	if err := serialization.DecodeJson(r.Body, &request); err != nil {
+		return apperrors.NewBadRequestError(err.Error())
+	}
+	if err := request.Validate(); err != nil {
+		return apperrors.NewBadRequestError(err.Error())
+	}
+	customer, err := s.repository.GetById(ctx, request.CustomerId)
+	if err != nil {
+		return apperrors.NewNotFoundError("Customer not found")
+	}
+	customer.CustomerStatus = request.NewStatus
+	s.repository.Update(ctx, customer)
+	return nil
+}
+
+
+func (s *CustomerService) DeleteCustomer(ctx context.Context, customerId int64) error {
+	customer, err := s.repository.GetById(ctx, customerId)
+	if err != nil {
+		return apperrors.NewNotFoundError("Customer not found")
+	}
+	s.repository.Delete(ctx, customer)
+	return nil
+}
+
+
+func (s *CustomerService) GetAllCustomers(r *http.Request, ctx context.Context, params helpers.PaginationParams) (*httputils.Pagination[entities.CustomerData], error) {
+	if params.CurrentPage < 0  || params.Limit < 1 {
 		return nil, apperrors.NewBadRequestError("Incorrect current page or limit")
 	}
 	count, err := s.repository.Count(ctx)
 	if err != nil {
 		return nil, apperrors.NewNotFoundError("No customers found")
 	}
-	customers, err := s.repository.GetAll(ctx, limit, currentPage)
+	customers, err := s.repository.GetAll(ctx, params.Limit, params.CurrentPage)
 	if err != nil {
 		return nil, err
 	}
-	pagination, err := httputils.NewPagination(r, customers, int(count), currentPage, limit)
+	pagination, err := httputils.NewPagination(r, customers, int(count), params.CurrentPage, params.Limit)
 	if err != nil {
 		return nil, err
 	}
 	return pagination, nil
 }
 
-func (s *CustomerService) GetCustomerById(ctx context.Context, customerId int64) (entities.Customer, error) {
+
+func (s *CustomerService) GetCustomerById(ctx context.Context, customerId int64) (entities.CustomerData, error) {
 	if customerId < 0 {
-		return entities.Customer{}, apperrors.NewBadRequestError("CustomerId must be greather than 0")
+		return entities.CustomerData{}, apperrors.NewBadRequestError("CustomerId must be greather than 0")
 	}
-	customer, err := s.repository.GetById(ctx, customerId)
+	customer, err := s.repository.GetDataById(ctx, customerId)
 	if err != nil {
-		return entities.Customer{}, apperrors.NewNotFoundError("Customer not found")
+		return entities.CustomerData{}, apperrors.NewNotFoundError("Customer not found")
 	}
 	return customer, nil
 }
 
-func (s *CustomerService) GetCustomerByUniqueId(ctx context.Context, uniqueId string) (entities.Customer, error) {
+
+func (s *CustomerService) GetCustomerByUniqueId(ctx context.Context, uniqueId string) (entities.CustomerData, error) {
 	if uniqueId == "" {
-		return entities.Customer{}, apperrors.NewBadRequestError("UniqueId cannot be null")
+		return entities.CustomerData{}, apperrors.NewBadRequestError("UniqueId cannot be null")
 	}
-	customer, err := s.repository.GetByUniqueId(ctx, uniqueId)
+	customer, err := s.repository.GetByDataUniqueId(ctx, uniqueId)
 	if err != nil {
-		return entities.Customer{}, apperrors.NewNotFoundError("Customer not found")
+		return entities.CustomerData{}, apperrors.NewNotFoundError("Customer not found")
 	}
 	return customer, nil
 }
@@ -107,7 +174,7 @@ func (s *CustomerService) checkDuplicatedValues(ctx context.Context, field strin
 	  return fmt.Errorf("error checking %s existence: %w", field, err)
 	}
 	if exists {
-	  return apperrors.NewConflictError(fmt.Sprintf("%s '%s' already exists", field, value))
+	  return fmt.Errorf("%s '%s' already exists", field, value)
 	}
 	return nil
 }

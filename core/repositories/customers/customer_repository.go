@@ -3,7 +3,6 @@ package repositories
 import (
 	"context"
 	"errors"
-
 	entities "github.com/ortizdavid/go-bank-core-api/core/entities/customers"
 	"gorm.io/gorm"
 )
@@ -43,33 +42,54 @@ func (repo *CustomerRepository) Delete(ctx context.Context, customer entities.Cu
 	return result.Error
 }
 
-func (repo *CustomerRepository) GetAll(ctx context.Context, limit int, offest int) ([]entities.Customer, error) {
-	var customers []entities.Customer
-	result := repo.db.WithContext(ctx).Find(&customers).Limit(limit).Offset(offest)
+func (repo *CustomerRepository) GetAll(ctx context.Context, limit int, offset int) ([]entities.CustomerData, error) {
+	var customers []entities.CustomerData
+	result := repo.db.WithContext(ctx).
+		Table("view_customer_data").
+		Limit(limit).Offset(offset).
+		Find(&customers)
 	return customers, result.Error
 }
 
 func (repo *CustomerRepository) GetById(ctx context.Context, customerId int64) (entities.Customer, error) {
 	var customer entities.Customer
-	result := repo.db.WithContext(ctx).First(&customer, customerId)
+	result := repo.db.WithContext(ctx).Table("customers").First(&customer, customerId)
 	if result.Error != nil {
 		return entities.Customer{}, result.Error
+	}
+	return customer, result.Error
+}
+
+func (repo *CustomerRepository) GetDataById(ctx context.Context, customerId int64) (entities.CustomerData, error) {
+	var customer entities.CustomerData
+	result := repo.db.WithContext(ctx).Table("view_customer_data").First(&customer, customerId)
+	if result.Error != nil {
+		return entities.CustomerData{}, result.Error
 	}
 	return customer, result.Error
 }
 
 func (repo *CustomerRepository) GetByUniqueId(ctx context.Context, uniqueId string) (entities.Customer, error) {
 	var customer entities.Customer
-	result := repo.db.WithContext(ctx).First(&customer, "unique_id", uniqueId)
+	result := repo.db.WithContext(ctx).Table("customers").First(&customer, "unique_id", uniqueId)
 	if result.Error != nil {
 		return entities.Customer{}, result.Error
 	}
 	return customer, result.Error
 }
 
+func (repo *CustomerRepository) GetByDataUniqueId(ctx context.Context, uniqueId string) (entities.CustomerData, error) {
+	var customer entities.CustomerData
+	result := repo.db.WithContext(ctx).Table("view_customer_data").First(&customer, "unique_id", uniqueId)
+	if result.Error != nil {
+		return entities.CustomerData{}, result.Error
+	}
+	return customer, result.Error
+}
+
 func (repo *CustomerRepository) Count(ctx context.Context) (int64, error) {
 	var count int64
-	result := repo.db.WithContext(ctx).Count(&count)
+	result := repo.db.WithContext(ctx).Table("customers").Count(&count)
 	return count, result.Error
 }
 

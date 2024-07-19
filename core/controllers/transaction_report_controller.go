@@ -3,16 +3,16 @@ package controllers
 import (
 	"net/http"
 	"gorm.io/gorm"
-	reportRepo "github.com/ortizdavid/go-bank-core-api/core/repositories/reports"
+	"github.com/ortizdavid/go-bank-core-api/core/repositories/reports"
 )
 
 type TransactionReportController struct {
-	repositoryRepository reportRepo.TransactionReportRepository
+	repositoryRepository repositories.TransactionReportRepository
 }
 
 func NewTransactionReportController(db *gorm.DB) *TransactionReportController {
 	return &TransactionReportController{
-		repositoryRepository: *reportRepo.NewTransactionReportRepository(db),
+		repositoryRepository: *repositories.NewTransactionReportRepository(db),
 	}
 }
 
