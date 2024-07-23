@@ -7,12 +7,12 @@ import (
 )
 
 type AccountReportController struct {
-	repositoryRepository repositories.AccountReportRepository
+	repository *repositories.AccountReportRepository
 }
 
 func NewAccountReportController(db *gorm.DB) *AccountReportController {
 	return &AccountReportController{
-		repositoryRepository: *repositories.NewAccountReportRepository(db),
+		repository: repositories.NewAccountReportRepository(db),
 	}
 }
 

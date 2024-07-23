@@ -1,6 +1,9 @@
 package apperrors
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type UnprocessableEntityError struct {
 	Message    string
@@ -10,7 +13,7 @@ type UnprocessableEntityError struct {
 func NewUnprocessableEntityError(message string) *UnprocessableEntityError {
 	return &UnprocessableEntityError{
 		Message:    message,
-		StatusCode: 422,
+		StatusCode: http.StatusUnprocessableEntity,
 	}
 }
 

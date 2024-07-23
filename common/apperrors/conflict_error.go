@@ -1,6 +1,9 @@
 package apperrors
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type ConflictError struct {
 	Message string
@@ -10,7 +13,7 @@ type ConflictError struct {
 func NewConflictError(message string) *ConflictError {
 	return &ConflictError{
 		Message: message,
-		StatusCode: 409,
+		StatusCode: http.StatusConflict,
 	}
 }
 

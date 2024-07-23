@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ortizdavid/go-bank-core-api/config"
+	"github.com/ortizdavid/go-bank-core-api/common/config"
 	entities "github.com/ortizdavid/go-bank-core-api/core/entities/customers"
 	"github.com/ortizdavid/go-bank-core-api/core/services/customers"
-	"github.com/ortizdavid/go-bank-core-api/helpers"
+	"github.com/ortizdavid/go-bank-core-api/common/helpers"
 	"github.com/ortizdavid/go-nopain/conversion"
 	"github.com/ortizdavid/go-nopain/httputils"
 	"go.uber.org/zap"
@@ -15,14 +15,14 @@ import (
 )
 
 type CustomerController struct {
-	service services.CustomerService
+	service *services.CustomerService
 	infoLogger *zap.Logger
 	errorLogger *zap.Logger
 }
 
 func NewCustomerController(db *gorm.DB) *CustomerController {
 	return &CustomerController{
-		service: *services.NewCustomerService(db),
+		service: services.NewCustomerService(db),
 		infoLogger:  config.NewLogger("customers-info.log"),
 		errorLogger:  config.NewLogger("customers-error.log"),
 	}
@@ -37,7 +37,6 @@ func (c *CustomerController) RegisterRoutes(router *http.ServeMux) {
 	router.HandleFunc("PUT /api/customers/change-status", c.changeCustomerStatus)
 	router.HandleFunc("PUT /api/customers/update-contacts", c.updateCustomerContacts)
 	router.HandleFunc("DELETE /api/customers/{id}", c.deleteCustomer)
-	
 }
 
 func (c * CustomerController) getAllCustomers(w http.ResponseWriter, r *http.Request) {

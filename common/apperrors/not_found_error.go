@@ -1,6 +1,9 @@
 package apperrors
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type NotFoundError struct {
 	Message string
@@ -10,7 +13,7 @@ type NotFoundError struct {
 func NewNotFoundError(message string) *NotFoundError {
 	return &NotFoundError{
 		Message: message,
-		StatusCode: 404,
+		StatusCode: http.StatusNotFound,
 	}
 }
 

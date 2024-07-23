@@ -2,7 +2,7 @@ package helpers
 
 import (
 	"net/http"
-	"github.com/ortizdavid/go-bank-core-api/apperrors"
+	"github.com/ortizdavid/go-bank-core-api/common/apperrors"
 	"github.com/ortizdavid/go-nopain/httputils"
 )
 

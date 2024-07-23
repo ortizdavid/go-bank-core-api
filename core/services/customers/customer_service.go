@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ortizdavid/go-bank-core-api/apperrors"
+	"github.com/ortizdavid/go-bank-core-api/common/apperrors"
 	"github.com/ortizdavid/go-bank-core-api/core/entities/customers"
 	"github.com/ortizdavid/go-bank-core-api/core/repositories/customers"
-	"github.com/ortizdavid/go-bank-core-api/helpers"
+	"github.com/ortizdavid/go-bank-core-api/common/helpers"
 	"github.com/ortizdavid/go-nopain/datetime"
 	"github.com/ortizdavid/go-nopain/encryption"
 	"github.com/ortizdavid/go-nopain/httputils"

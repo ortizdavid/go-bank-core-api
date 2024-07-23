@@ -1,16 +1,19 @@
 package apperrors
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type ForbiddenError struct {
 	Message    string
 	StatusCode int
 }
 
-func (err *ForbiddenError) NewForbidenError(message string) *ForbiddenError {
+func (err *ForbiddenError) NewForbiddenError(message string) *ForbiddenError {
 	return &ForbiddenError{
 		Message:    message,
-		StatusCode: 403,
+		StatusCode: http.StatusForbidden,
 	}
 }
 

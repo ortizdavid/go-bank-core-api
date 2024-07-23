@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"net/http"
-	"github.com/ortizdavid/go-bank-core-api/config"
+	"github.com/ortizdavid/go-bank-core-api/common/config"
 	accountRepo "github.com/ortizdavid/go-bank-core-api/core/repositories/accounts"
 	transactionRepo "github.com/ortizdavid/go-bank-core-api/core/repositories/transactions"
 	"go.uber.org/zap"
@@ -10,15 +10,15 @@ import (
 )
 
 type TransactionController struct {
-	transactionRepository transactionRepo.TransactionRepository
-	accountRepository accountRepo.AccountRepository
+	repository *transactionRepo.TransactionRepository
+	accountRepository *accountRepo.AccountRepository
 	logger *zap.Logger
 }
 
 func NewTransactionController(db *gorm.DB) *TransactionController {
 	return &TransactionController{
-		transactionRepository: *transactionRepo.NewTransactionRepository(db),
-		accountRepository:  *accountRepo.NewAccountRepository(db),
+		repository: transactionRepo.NewTransactionRepository(db),
+		accountRepository:  accountRepo.NewAccountRepository(db),
 		logger:             config.NewLogger("transactions.log"),
 	}
 }

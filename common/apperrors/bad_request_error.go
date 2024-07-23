@@ -1,6 +1,9 @@
 package apperrors
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type BadRequestError struct {
 	Message string
@@ -10,7 +13,7 @@ type BadRequestError struct {
 func NewBadRequestError(message string) *BadRequestError {
 	return &BadRequestError{
 		Message: message,
-		StatusCode: 400,
+		StatusCode: http.StatusBadRequest,
 	}
 }
 

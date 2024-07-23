@@ -1,6 +1,9 @@
 package apperrors
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 type UnauthorizedError struct {
 	Message    string
@@ -10,7 +13,7 @@ type UnauthorizedError struct {
 func NewUnauthorizedError(message string) *UnauthorizedError {
 	return &UnauthorizedError{
 		Message:    message,
-		StatusCode: 401,
+		StatusCode: http.StatusUnauthorized,
 	}
 }
 
