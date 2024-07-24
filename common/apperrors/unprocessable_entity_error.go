@@ -1,22 +1,12 @@
 package apperrors
 
 import (
-	"fmt"
 	"net/http"
 )
 
-type UnprocessableEntityError struct {
-	Message    string
-	StatusCode int
-}
-
-func NewUnprocessableEntityError(message string) *UnprocessableEntityError {
-	return &UnprocessableEntityError{
+func NewUnprocessableEntityError(message string) *AppError {
+	return &AppError{
 		Message:    message,
 		StatusCode: http.StatusUnprocessableEntity,
 	}
-}
-
-func (err *UnprocessableEntityError) Error() string {
-	return fmt.Sprintf("Unprocessable: %s", err.Message)
 }

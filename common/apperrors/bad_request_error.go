@@ -1,22 +1,12 @@
 package apperrors
 
 import (
-	"fmt"
 	"net/http"
 )
 
-type BadRequestError struct {
-	Message string
-	StatusCode int
-}
-
-func NewBadRequestError(message string) *BadRequestError {
-	return &BadRequestError{
+func NewBadRequestError(message string) *AppError {
+	return &AppError{
 		Message: message,
 		StatusCode: http.StatusBadRequest,
 	}
-}
-
-func (err *BadRequestError) Error() string {
-	return fmt.Sprintf("BadRequest: %s", err.Message)
 }

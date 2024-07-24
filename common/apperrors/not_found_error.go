@@ -1,22 +1,13 @@
 package apperrors
 
 import (
-	"fmt"
 	"net/http"
 )
 
-type NotFoundError struct {
-	Message string
-	StatusCode int
-}
-
-func NewNotFoundError(message string) *NotFoundError {
-	return &NotFoundError{
+func NewNotFoundError(message string) *AppError {
+	return &AppError{
 		Message: message,
 		StatusCode: http.StatusNotFound,
 	}
 }
 
-func (err *NotFoundError) Error() string {
-	return fmt.Sprintf("NotFound: %s", err.Message)
-}
