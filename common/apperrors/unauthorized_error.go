@@ -4,8 +4,8 @@ import (
 	"net/http"
 )
 
-func NewUnauthorizedError(message string) *AppError {
-	return &AppError{
+func NewUnauthorizedError(message string) *HttpError {
+	return &HttpError{
 		Message:    message,
 		StatusCode: http.StatusUnauthorized,
 	}

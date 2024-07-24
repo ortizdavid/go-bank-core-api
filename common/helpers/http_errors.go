@@ -6,10 +6,10 @@ import (
 	"github.com/ortizdavid/go-nopain/httputils"
 )
 
-// handleCustomerError centralizes error handling for customer-related operations
-func HandleCustomErrors(w http.ResponseWriter, err error) {
+// HandleHttpErrors centralizes error handling for http-related operations
+func HandleHttpErrors(w http.ResponseWriter, err error) {
     if err != nil {
-        if e, ok := err.(*apperrors.AppError); ok {
+        if e, ok := err.(*apperrors.HttpError); ok {
             httputils.WriteJsonError(w, e.Error(), e.StatusCode)
             return
         } else {

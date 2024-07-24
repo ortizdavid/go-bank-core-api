@@ -42,7 +42,7 @@ func (ctrl *CustomerController) getAllCustomers(w http.ResponseWriter, r *http.R
 	params := helpers.GetPaginationParams(r)
 	customers, err := ctrl.service.GetAllCustomers(r, r.Context(), params)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		return
 	}
 	httputils.WriteJsonSimple(w, http.StatusOK, customers)
@@ -52,7 +52,7 @@ func (ctrl *CustomerController) getCustomerById(w http.ResponseWriter, r *http.R
 	id := conversion.StringToInt64(r.PathValue("id"))
 	customer, err := ctrl.service.GetCustomerById(r.Context(), id)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		return
 	}
 	httputils.WriteJson(w, http.StatusOK, customer)
@@ -62,7 +62,7 @@ func (ctrl *CustomerController) getCustomerByUniqueId(w http.ResponseWriter, r *
 	uniqueId := r.PathValue("unique_id")
 	customer, err := ctrl.service.GetCustomerByUniqueId(r.Context(), uniqueId)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		return
 	}
 	httputils.WriteJson(w, http.StatusOK, customer)
@@ -72,7 +72,7 @@ func (ctrl *CustomerController) createCustomer(w http.ResponseWriter, r *http.Re
 	var request entities.CreateCustomerRequest
 	err := ctrl.service.CreateCustomer(r, r.Context(), request)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		ctrl.errorLogger.Error(err.Error())
 		return
 	}
@@ -85,7 +85,7 @@ func (ctrl *CustomerController) changeCustomerType(w http.ResponseWriter, r *htt
 	var request entities.ChangeCustomerTypeRequest
 	err := ctrl.service.ChangeCustomerType(r, r.Context(), request)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		ctrl.errorLogger.Error(err.Error())
 		return
 	}
@@ -98,7 +98,7 @@ func (ctrl *CustomerController) changeCustomerStatus(w http.ResponseWriter, r *h
 	var request entities.ChangeCustomerStatusRequest
 	err := ctrl.service.ChangeCustomerStatus(r, r.Context(), request)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		ctrl.errorLogger.Error(err.Error())
 		return
 	}
@@ -111,7 +111,7 @@ func (ctrl *CustomerController) updateCustomerContacts(w http.ResponseWriter, r 
 	var request entities.UpdateCustomerContactRequest
 	err := ctrl.service.UpdateCustomerContacts(r, r.Context(), request)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		ctrl.errorLogger.Error(err.Error())
 		return
 	}
@@ -124,7 +124,7 @@ func (ctrl *CustomerController) deleteCustomer(w http.ResponseWriter, r *http.Re
 	customerId := conversion.StringToInt64(r.PathValue("id"))
 	err := ctrl.service.DeleteCustomer(r.Context(), customerId)
 	if err != nil {
-		helpers.HandleCustomErrors(w, err)
+		helpers.HandleHttpErrors(w, err)
 		ctrl.errorLogger.Error(err.Error())
 		return 
 	}

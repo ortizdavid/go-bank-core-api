@@ -4,8 +4,8 @@ import (
 	"net/http"
 )
 
-func NewBadRequestError(message string) *AppError {
-	return &AppError{
+func NewBadRequestError(message string) *HttpError {
+	return &HttpError{
 		Message: message,
 		StatusCode: http.StatusBadRequest,
 	}
