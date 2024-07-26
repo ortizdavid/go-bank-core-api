@@ -17,5 +17,4 @@ func HandleHttpErrors(w http.ResponseWriter, err error) {
             return
         }
     }
-
 }

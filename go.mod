@@ -4,7 +4,7 @@ go 1.22.4
 
 require (
 	github.com/joho/godotenv v1.5.1
-	github.com/ortizdavid/go-nopain v0.0.0-20240717150117-d0e1c3e80cc1
+	github.com/ortizdavid/go-nopain v0.0.0-20240726082554-95d443d61b12
 	go.uber.org/zap v1.27.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gorm.io/driver/postgres v1.5.9

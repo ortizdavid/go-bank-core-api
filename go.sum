@@ -37,6 +37,8 @@ github.com/ortizdavid/go-nopain v0.0.0-20240707132515-7953598e8e7b h1:feAgjA6UGr
 github.com/ortizdavid/go-nopain v0.0.0-20240707132515-7953598e8e7b/go.mod h1:oN9ApRVMeTilxysg62E6+JoQPzDlQjNLxvCmUCfPbLE=
 github.com/ortizdavid/go-nopain v0.0.0-20240717150117-d0e1c3e80cc1 h1:LdQm+nKubNTtEKYiCN214YGm6P35MDkqLAbaeuVEt98=
 github.com/ortizdavid/go-nopain v0.0.0-20240717150117-d0e1c3e80cc1/go.mod h1:oN9ApRVMeTilxysg62E6+JoQPzDlQjNLxvCmUCfPbLE=
+github.com/ortizdavid/go-nopain v0.0.0-20240726082554-95d443d61b12 h1:6JzUBIJuUlbfRx/kfMzT9l42gJhKXSygoWeueaPYykk=
+github.com/ortizdavid/go-nopain v0.0.0-20240726082554-95d443d61b12/go.mod h1:oN9ApRVMeTilxysg62E6+JoQPzDlQjNLxvCmUCfPbLE=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

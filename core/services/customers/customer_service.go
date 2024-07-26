@@ -136,7 +136,7 @@ func (s *CustomerService) GetAllCustomers(r *http.Request, ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	pagination, err := httputils.NewPagination(r, customers, int(count), params.CurrentPage, params.Limit)
+	pagination, err := httputils.NewPagination(r, customers, count, params.CurrentPage, params.Limit)
 	if err != nil {
 		return nil, err
 	}
